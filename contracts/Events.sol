@@ -7,21 +7,35 @@ contract Events {
     struct Event {
         uint id;
         string name;
+        string visibility;
         string description;
+        string location;
+        bool requireApproval;
+        uint capacity;
         uint date; // Unix timestamp
+        string creatorName;
         address creator;
     }
 
     mapping(uint => Event) public events;
 
-    event EventCreated(uint id, string name, address creator);
-    event EventUpdated(uint id, string name, address updater);
+    event EventCreated(uint id, string name, address creator, string creatorName, string visibility, string description, uint date, string location, bool requireApproval, uint capacity);
+    event EventUpdated(uint id, string name, address updater, string updaterName, string visibility, string description, uint date, string location, bool requireApproval, uint capacity);
 
-    function createEvent(string memory name, string memory description, uint date) public {
+    function createEvent(
+        string memory name,
+        string memory visibility;
+        string memory description,
+        string memory location,
+        bool requireApproval,
+        uint capacity,
+        uint date,
+        string memory creatorName
+    ) public {
         require(date > block.timestamp, "Event must be in the future");
 
-        events[nextId] = Event(nextId, name, description, date, msg.sender);
-        emit EventCreated(nextId, name, msg.sender);
+        events[nextId] = Event(nextId, name, description, location, requireApproval, capacity, date, creatorName, msg.sender);
+        emit EventCreated(nextId, name, msg.sender, creatorName, visibility, description, date, location, requireApproval, capacity);
         nextId++;
     }
 
